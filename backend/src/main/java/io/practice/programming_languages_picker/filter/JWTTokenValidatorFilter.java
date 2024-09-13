@@ -15,6 +15,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
@@ -37,18 +38,15 @@ public class JWTTokenValidatorFilter extends OncePerRequestFilter {
             throws ServletException, IOException {
         try {
             System.out.println("Start validator");
-        String authorizationHeader = request.getHeader(SecurityConstants.JWT_HEADER);
-
+            String authorizationHeader = request.getHeader(SecurityConstants.JWT_HEADER);
         if (authorizationHeader != null && authorizationHeader.startsWith(BEARER_PREFIX)) {
 
                 String token = authorizationHeader.substring(BEARER_PREFIX.length());
-
                 Claims claims = jwtUtil.parseToken(token);
 
                 String email = claims.getSubject();
-                System.out.println(email);
-                if (email != null && SecurityContextHolder.getContext().getAuthentication() == null) {
-                    UserDetails userDetails = userService.loadUserByUsername(email);  // Fetch latest user details
+                UserDetails userDetails = userService.loadUserByUsername(email);  // Fetch latest user details
+                if (email != null && userDetails.getUsername() != null && SecurityContextHolder.getContext().getAuthentication() == null) {
                     if (jwtUtil.validateToken(token, userDetails)) {  // Validate token
                         Authentication authToken = new UsernamePasswordAuthenticationToken(
                                 userDetails.getUsername(), null, userDetails.getAuthorities());
@@ -59,6 +57,10 @@ public class JWTTokenValidatorFilter extends OncePerRequestFilter {
 
         }
         filterChain.doFilter(request, response);
+        } catch (UsernameNotFoundException ex) {
+            request.setAttribute("exception_message", "Email not found!");
+            throw new BadCredentialsException("Email not found!");
+
         } catch (Exception ex) {
             request.setAttribute("exception_message", "Invalid Token received!");
             throw new BadCredentialsException("Invalid Token received!");

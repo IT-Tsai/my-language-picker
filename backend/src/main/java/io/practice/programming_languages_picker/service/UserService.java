@@ -2,7 +2,6 @@ package io.practice.programming_languages_picker.service;
 
 import io.practice.programming_languages_picker.dto.TokenDto;
 import io.practice.programming_languages_picker.model.User;
-import io.practice.programming_languages_picker.projection.AuthProjection;
 import io.practice.programming_languages_picker.projection.UserProjection;
 import io.practice.programming_languages_picker.repository.LanguageRepo;
 import io.practice.programming_languages_picker.repository.UserRepo;
@@ -17,8 +16,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.time.OffsetDateTime;
-import java.util.Date;
-import java.util.Optional;
 
 @Service
 public class UserService implements UserDetailsService {
@@ -77,8 +74,8 @@ public class UserService implements UserDetailsService {
         userRepo.updateRefreshToken(email, refreshToken, refreshTokenExpiresAt);
     }
 
+    @Transactional
     public void deleteUser(int id) {
-        logger.info("delete user id: {}", id);
         userRepo.deleteById(id);
     }
 
