@@ -26,7 +26,7 @@ export const register = async (password: string, email: string, role: string) =>
 }
 
 export const isAuthenticated = async () => {
-  const auth = JSON.parse(localStorage.getItem(AUTH) ?? "{}") as IAuthUser;
+  const auth = returnAuth();
   return await validToken(auth.accessToken);
 }
 
@@ -35,9 +35,13 @@ export const isValidToken = (auth: IAuthUser) => {
 }
 
 export const getRefreshToken = async () => {
-  const auth = JSON.parse(localStorage.getItem(AUTH) ?? "{}") as IAuthUser;
+  const auth = returnAuth();
 
   if (!(auth.accessToken && auth.refreshToken && auth.refreshTokenExpiresAt < new Date())) return false;
 
   refreshToken(auth.accessToken, auth.refreshToken, auth.refreshTokenExpiresAt);
+}
+
+export const returnAuth = () => {
+  return JSON.parse(localStorage.getItem(AUTH) ?? "{}") as IAuthUser;
 }
