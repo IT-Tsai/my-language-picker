@@ -17,13 +17,11 @@ export const DefaultHeader = {
 
 export const login = async (email: string, password: string) => {
   const data = await signIn(email, password) as IAuthUser;
-  console.log("login data")
   localStorage.setItem(AUTH, JSON.stringify(data));
 }
 
 export const register = async (password: string, email: string, role: string) => {
   const data = await signUp(password, email, role) as IAuthUser;
-  console.log("register data")
   localStorage.setItem(AUTH, JSON.stringify(data));
 }
 

@@ -24,12 +24,10 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     if (typeof window !== 'undefined') {
       const onAuthenticate = async () => {
         const authenticated = await isAuthenticated();
-        console.log("authenticated rse " + authenticated);
         if (authenticated) {
           console.log("isAuthenticated");
           setIsLoggedIn(true);
         } else {
-          console.log(" not isAuthenticated");
           localStorage.removeItem(AUTH);
           setIsLoggedIn(false);
           if (!paths.includes(pathName))

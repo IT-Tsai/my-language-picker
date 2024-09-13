@@ -18,7 +18,6 @@ export const signIn = async (email: string, password: string): Promise<IAuthUser
     const data = await response.json();
 
     if (!response.ok) {
-      console.log(data.message);
       throw (data.message) || 'Unable to Login';
     }
 
@@ -71,7 +70,7 @@ export const validToken = async (accessToken: string): Promise<boolean> => {
     })
 
     const data = await response.json();
-    console.log(data);
+
     return data.isValid;
 
   } catch (error: any) {

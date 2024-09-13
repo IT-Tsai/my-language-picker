@@ -21,7 +21,6 @@ export const getAllLanguages = async (accessToken: String): Promise<Language[]> 
     });
 
     const data = await response.json();
-    console.log(data)
 
     if (!response.ok) {
       throw data.message;
