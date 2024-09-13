@@ -1,0 +1,70 @@
+.register {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 0 20px;
+  margin-top: 5rem;
+}
+
+.header {
+  text-align: center;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  margin-top: 20px;
+  width: 20%;
+}
+
+.register-content {
+  display: flex;
+  flex-direction: column;
+}
+
+.register-input {
+  height: 2rem;
+  border: 1px solid gray;
+  border-radius: 4px;
+  font-weight: lighter;
+  padding: 6px;
+}
+
+.register-select {
+  height: 2rem;
+  border: 1px solid gray;
+  border-radius: 4px;
+  font-weight: lighter;
+}
+
+.register-label {
+  font-size: medium;
+  margin-right: 2px;
+  padding: 1px;
+  color: white;
+}
+
+.register-btn {
+  height: 2rem;
+  border: 1px solid gray;
+  background-color: transparent;
+  border-radius: 4px;
+  padding: 7px;
+  cursor: pointer;
+  margin-top: 5px;
+  font-size: medium;
+}
+
+.error {
+  color: white;
+}
+
+.input-error {
+  color: red;
+  font-size: small;
+}
+/* @media (min-width: 640px) { ... } tablet  
+   @media (min-width: 1024px) { ... } laptop 
+   @media (min-width: 1280px) { ... } desktop*/
