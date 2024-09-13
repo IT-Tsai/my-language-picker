@@ -2,8 +2,6 @@
 import Language from "@/models/Language"
 import Image from "next/image"
 import classes from './Languages.module.css';
-import { ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
 import { useEffect, useState } from "react";
 import { AUTH } from "@/_util/auth";
 import { IAuthUser } from "@/models/User";
@@ -59,7 +57,6 @@ const Languages = () => {
           </div>
         )
       })}
-      <ToastContainer />
     </div >
   </div>
   )

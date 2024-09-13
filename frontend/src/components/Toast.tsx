@@ -1,7 +1,5 @@
 'use client'
 import { toast, Bounce, ToastOptions } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
-
 
 const toastSetting: ToastOptions = {
   position: "top-center",
