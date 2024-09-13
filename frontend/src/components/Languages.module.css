@@ -1,0 +1,36 @@
+.container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  align-items: center;
+  padding: 5rem;
+  gap: 3rem;
+}
+
+.header {
+  text-align: center;
+}
+
+.item {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.title {
+  margin-bottom: 1rem;
+}
+
+.language-btn {
+  border: 1px solid gray;
+  background-color: transparent;
+  border-radius: 4px;
+  padding: 5px;
+  cursor: pointer;
+  margin-top: 5px;
+}
+
+.error {
+  color: white;
+}

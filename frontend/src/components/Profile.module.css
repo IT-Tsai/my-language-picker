@@ -1,0 +1,105 @@
+.container {
+  display: flex;
+  width: 50%;
+  margin: auto;
+  padding: 2rem;
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 1rem;
+}
+
+.profile-label {
+  font-size: medium;
+  font-weight: 300;
+  color: white;
+  font-style: italic;
+}
+
+.profile-text {
+  font-size: large;
+  font-weight: 500;
+  color: white;
+}
+
+.edit-input-error {
+  color: lightcoral;
+  font-size: small;
+}
+
+.skill-table {
+  height: auto;
+  overflow-y: hidden;
+  white-space: nowrap;
+  width: 300px;
+}
+
+.skill {
+  display: inline-block;
+  margin-right: 0.5rem;
+}
+
+.btn {
+  display: flex;
+  justify-content: space-between;
+}
+
+.btn-item {
+  padding: 0.25rem;
+  border-radius: 10%;
+  background-color: wheat;
+  color: black;
+  margin-right: 0.5rem;
+}
+
+.btn-item:last-child {
+  margin: 0;
+}
+
+.edit-item {
+  display: flex;
+  flex-direction: column;
+}
+
+.edit-skill-table {
+  height: auto;
+  overflow-y: hidden;
+  white-space: nowrap;
+  width: 300px;
+}
+
+.edit-skill {
+  display: inline-block;
+  margin-right: 1rem;
+}
+
+.edit-skill:last-child {
+  margin: 0;
+}
+
+.edit-skill-item {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.edit-btn {
+  display: flex;
+  justify-content: space-between;
+}
+
+.edit-icon-btn {
+  background-color: transparent;
+  border-color: transparent;
+}
