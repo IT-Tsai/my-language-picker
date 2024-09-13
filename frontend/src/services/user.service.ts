@@ -7,7 +7,7 @@ export const updateUser = async (id: number | undefined, password: string, email
   try {
     const response = await fetch(`${url}/update`, {
       method: "PUT",
-      headers: { "Content-Type": "application/json" },
+      headers: { ...DefaultHeader },
       body: JSON.stringify({
         id,
         password,
@@ -28,11 +28,18 @@ export const updateUser = async (id: number | undefined, password: string, email
 
 }
 
-export const deleteUser = async (id: number): Promise<void> => {
+export const deleteUser = async (id: number, accessToken: string): Promise<void> => {
   try {
+    console.log(accessToken)
     const response = await fetch(`${url}/delete?` + new URLSearchParams({
-      "id": id.toString(),
-    }).toString(), { method: "POST" });
+      "userId": id.toString(),
+    }).toString(), {
+      method: "DELETE",
+      headers: {
+        'Authorization': "Bearer " + accessToken,
+        ...DefaultHeader
+      }
+    });
     const data = await response.json();
 
     if (!response.ok) {
@@ -41,7 +48,7 @@ export const deleteUser = async (id: number): Promise<void> => {
 
   } catch (error: any) {
     console.log(error, " error");
-    throw new Error("An unexpected error occurred.");
+    throw new Error(error || "An unexpected error occurred.");
   }
 }
 

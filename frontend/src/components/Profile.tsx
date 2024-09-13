@@ -84,7 +84,7 @@ const Profile = () => {
   const onDeleteUser = async () => {
     try {
       if (user != undefined) {
-        await deleteUser(user.id);
+        await onDeleteUser();
         router.push("/register");
       }
     } catch (error: any) {
