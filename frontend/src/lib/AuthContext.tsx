@@ -25,7 +25,6 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
       const onAuthenticate = async () => {
         const authenticated = await isAuthenticated();
         if (authenticated) {
-          console.log("isAuthenticated");
           setIsLoggedIn(true);
         } else {
           localStorage.removeItem(AUTH);
