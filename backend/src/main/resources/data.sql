@@ -10,4 +10,6 @@ INSERT IGNORE INTO languages(name, image_url) VALUES
                 ("PowerShell", "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/powershell/powershell-original.svg"),
                   ("TypeScript", "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/typescript/typescript-original.svg"),
                     ("Java","https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/java/java-original.svg"),
+                    ("NextJS","https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/nextjs/nextjs-original.svg"),
+                    ("React","https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/react/react-original-wordmark.svg"),
                       ("JavaScript","https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/javascript/javascript-original.svg");
