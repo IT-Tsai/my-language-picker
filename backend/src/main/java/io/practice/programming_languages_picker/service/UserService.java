@@ -64,7 +64,7 @@ public class UserService implements UserDetailsService {
 
     @Transactional
     public void updatePassword(User user) {
-        userRepo.findById(user.getId()).orElseThrow(() -> new EntityNotFoundException("Can't find user by Id " + user.getId()));
+        userRepo.findByEmail(user.getEmail()).orElseThrow(() -> new EntityNotFoundException("Can't find user by Email " + user.getEmail()));
         logger.info("updated user: {}", user);
         userRepo.updatePassword(user);
     }

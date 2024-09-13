@@ -3,16 +3,18 @@ import { IUser } from "@/models/User";
 import { DefaultHeader } from '@/_util/auth';
 const url = `${process.env.NEXT_PUBLIC_SERVER_HOST}/${process.env.NEXT_PUBLIC_API}/${process.env.NEXT_PUBLIC_MYSQL_USER_DB}`;;
 
-export const updateUser = async (id: number | undefined, password: string, email: string, name: string): Promise<void> => {
+export const updateUser = async (id: number, password: string, email: string, accessToken: string): Promise<void> => {
   try {
-    const response = await fetch(`${url}/update`, {
+    const response = await fetch(`${url}/update-password`, {
       method: "PUT",
-      headers: { ...DefaultHeader },
+      headers: {
+        'Authorization': "Bearer " + accessToken,
+        ...DefaultHeader
+      },
       body: JSON.stringify({
         id,
         password,
         email,
-        name,
       })
     });
 
@@ -21,9 +23,12 @@ export const updateUser = async (id: number | undefined, password: string, email
     if (!response.ok) {
       throw data.message;
     }
-  } catch (e) {
-    console.log(e);
-    throw new Error("An unexpected error occurred.");
+
+    return data.message;
+
+  } catch (error: any) {
+    console.log(error);
+    throw new Error(error || "An unexpected error occurred.");
   }
 
 }

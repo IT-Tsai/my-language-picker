@@ -4,14 +4,12 @@ import classes from "./Profile.module.css";
 import { IUser } from "@/models/User";
 import { MdDelete, MdLogout, MdOutlineCancel } from "react-icons/md";
 import { FaEdit, FaSave } from "react-icons/fa";
-import { updateUser, deleteUser } from "@/services/user.service";
-import { logout, retrieveUser } from '@/_util/profile';
+import { logout, onUpdateUser, retrieveUser } from '@/_util/profile';
 import { useForm, SubmitHandler } from "react-hook-form";
 import Image from "next/image";
 import { useRouter } from 'next/navigation'
 import AuthWrapper from '@/lib/AuthWrapper';
 import { deleteSkillFromUser, retrieveSkillsByUserId } from "@/_util/skills";
-import { ToastContainer } from "react-toastify";
 import { errorToast, successToast } from "./Toast";
 import { Skill } from "@/models/Skill";
 
@@ -59,11 +57,9 @@ const Profile = () => {
 
   const onLogout = () => {
     try {
-      console.log("logout")
       logout();
       router.push("/login");
     } catch (error: any) {
-      console.log("dd")
       errorToast(error);
     }
   }
@@ -73,7 +69,10 @@ const Profile = () => {
       const userId = user?.id;
       // Clear previous error messages
       setErrorMessage('');
-      await updateUser(userId, data.password, data.email, data.name);
+      await onUpdateUser(data.password);
+      successToast("Successfully update password");
+      reset();
+      setIsEdit(false);
     } catch (error: any) {
       console.error('Failed to update user', error);
       // If update user failed, display error message
@@ -83,7 +82,7 @@ const Profile = () => {
 
   const onDeleteUser = async () => {
     try {
-      if (user != undefined) {
+      if (!Number.isNaN(user.id)) {
         await onDeleteUser();
         router.push("/register");
       }
@@ -153,7 +152,6 @@ const Profile = () => {
           </div>
         </form >}
       </div >
-      <ToastContainer />
     </div>
 
   )

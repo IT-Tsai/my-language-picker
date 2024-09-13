@@ -1,5 +1,5 @@
 'use client'
-import { createContext, useState, useContext, useEffect, useCallback } from 'react';
+import { createContext, useState, useContext, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { usePathname } from 'next/navigation';
 import { AUTH, isAuthenticated } from '@/_util/auth';
@@ -41,7 +41,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 
   const logout = () => {
     setIsLoggedIn(false);
-    localStorage.removeItem('token');
+    localStorage.removeItem(AUTH);
     router.push('/login');
   };
 

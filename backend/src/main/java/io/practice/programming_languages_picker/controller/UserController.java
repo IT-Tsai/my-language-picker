@@ -56,9 +56,8 @@ public class UserController {
     @PutMapping("/update-password")
     public ResponseEntity<?> updatePassword(@RequestBody Map<String, Object> user) {
         try {
-            User updatedUser = new User((String) user.get("username"),
+            User updatedUser = new User((String) user.get("email"),
                                         (String) user.get("password"));
-
             userService.updatePassword(updatedUser);
 
             Map<String, String> responseBody = new HashMap<>();
@@ -66,7 +65,8 @@ public class UserController {
 
             return new ResponseEntity<>(responseBody, apiUtil.getHeader(""), HttpStatus.OK);
         } catch (Exception ex) {
-            return new ResponseEntity<>(new ServerError("An unexpected error occurred."), apiUtil.getHeader(""), HttpStatus.INTERNAL_SERVER_ERROR);
+            System.out.println(ex.getMessage());
+            return new ResponseEntity<>(new ServerError("An unexpected error occurred.", HttpStatus.INTERNAL_SERVER_ERROR), apiUtil.getHeader(""), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 

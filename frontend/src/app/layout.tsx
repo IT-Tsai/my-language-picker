@@ -48,7 +48,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
-        <AuthProvider><>
+        <AuthProvider>
           <Navigation />
           <ErrorBoundary errorComponent={Error}>
             <Suspense fallback={<Loading />}>
@@ -57,7 +57,7 @@ export default function RootLayout({
             </Suspense>
             <ToastContainer />
           </ErrorBoundary>
-        </></AuthProvider>
+        </AuthProvider>
       </body>
     </html>
   );

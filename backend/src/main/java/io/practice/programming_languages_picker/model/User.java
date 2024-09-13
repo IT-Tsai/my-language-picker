@@ -102,7 +102,6 @@ public class User implements UserDetails {
         this.email = email;
     }
 
-
     public User(String email, String password, ERole role, String accessToken, OffsetDateTime accessTokenExpiresAt, String refreshToken, OffsetDateTime refreshTokenExpiresAt) {
         this.password = password;
         this.email = email;
