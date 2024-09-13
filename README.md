@@ -25,3 +25,22 @@ npm run dev
 Download [Interllij](https://www.jetbrains.com/idea/download/)
 
 Use the Run icon in the gutter of the ProgrammingLanguagesPickerApplication.java file
+
+#### Database Getting Started
+
+In backend/src/main/resources/application.properties
+Set up your database name
+
+```sh
+# database address URL to use UTC timezone
+# here is Programming
+spring.datasource.url=jdbc:mysql://localhost:3306/Programming?serverTimezone=UTC
+```
+
+Your database name and password
+
+```sh
+# database account and password
+spring.datasource.username=root
+spring.datasource.password=password
+```
