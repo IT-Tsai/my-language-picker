@@ -4,7 +4,7 @@ import classes from "./Profile.module.css";
 import { IUser } from "@/models/User";
 import { MdDelete, MdLogout, MdOutlineCancel } from "react-icons/md";
 import { FaEdit, FaSave } from "react-icons/fa";
-import { logout, onUpdateUser, retrieveUser } from '@/_util/profile';
+import { logout, onDeleteUser, onUpdateUser, retrieveUser } from '@/_util/profile';
 import { useForm, SubmitHandler } from "react-hook-form";
 import Image from "next/image";
 import { useRouter } from 'next/navigation'
@@ -12,6 +12,7 @@ import AuthWrapper from '@/lib/AuthWrapper';
 import { deleteSkillFromUser, retrieveSkillsByUserId } from "@/_util/skills";
 import { errorToast, successToast } from "./Toast";
 import { Skill } from "@/models/Skill";
+import { AUTH } from "@/_util/auth";
 
 type Inputs = {
   password: string;
@@ -80,10 +81,11 @@ const Profile = () => {
     }
   };
 
-  const onDeleteUser = async () => {
+  const handleDeleteUser = async () => {
     try {
       if (!Number.isNaN(user.id)) {
         await onDeleteUser();
+        localStorage.removeItem(AUTH);
         router.push("/register");
       }
     } catch (error: any) {
@@ -111,7 +113,7 @@ const Profile = () => {
           </div>
           <div className="btn">
             <button className={classes["btn-item"]} onClick={() => setIsEdit(true)} disabled={isEdit}><FaEdit /> Edit</button>
-            <button className={classes["btn-item"]} onClick={onDeleteUser}><MdDelete /> Delete User</button >
+            <button className={classes["btn-item"]} onClick={handleDeleteUser}><MdDelete /> Delete User</button >
             <button className={classes["btn-item"]} onClick={onLogout}><MdLogout /> Log out</button >
           </div >
           <p className={classes.error}>{errorMessage}</p>

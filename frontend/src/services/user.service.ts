@@ -1,6 +1,7 @@
 'use server'
 import { IUser } from "@/models/User";
 import { DefaultHeader } from '@/_util/auth';
+
 const url = `${process.env.NEXT_PUBLIC_SERVER_HOST}/${process.env.NEXT_PUBLIC_API}/${process.env.NEXT_PUBLIC_MYSQL_USER_DB}`;;
 
 export const updateUser = async (id: number, password: string, email: string, accessToken: string): Promise<void> => {
@@ -35,7 +36,6 @@ export const updateUser = async (id: number, password: string, email: string, ac
 
 export const deleteUser = async (id: number, accessToken: string): Promise<void> => {
   try {
-    console.log(accessToken)
     const response = await fetch(`${url}/delete?` + new URLSearchParams({
       "userId": id.toString(),
     }).toString(), {
