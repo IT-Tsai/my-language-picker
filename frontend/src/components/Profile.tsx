@@ -12,7 +12,7 @@ import AuthWrapper from '@/lib/AuthWrapper';
 import { deleteSkillFromUser, retrieveSkillsByUserId } from "@/_util/skills";
 import { errorToast, successToast } from "./Toast";
 import { Skill } from "@/models/Skill";
-import { AUTH } from "@/_util/auth";
+import { AUTH, isAuthenticated } from "@/_util/auth";
 
 type Inputs = {
   password: string;
@@ -30,6 +30,9 @@ const Profile = () => {
 
   const fetchUser = useCallback(async () => {
     try {
+      if (!(await isAuthenticated())) {
+        onLogout();
+      }
       const userData = await retrieveUser();
       setUser({ ...userData });
       const userSkills = await retrieveSkillsByUserId();
