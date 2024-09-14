@@ -9,6 +9,8 @@ import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
@@ -25,6 +27,9 @@ public class UserController {
     @Autowired
     private ApiUtil apiUtil;
 
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
     @GetMapping("/id")
     public ResponseEntity<?> getUserById(@RequestParam("userId") Integer userId) {
         try {
@@ -34,6 +39,8 @@ public class UserController {
             return new ResponseEntity<>(responseBody, apiUtil.getHeader(""), HttpStatus.OK);
         } catch (EntityNotFoundException ex) {
             return new ResponseEntity<>( new ServerError("User not found by id : " + userId, HttpStatus.NOT_FOUND), apiUtil.getHeader(""),HttpStatus.NOT_FOUND);
+        } catch (BadCredentialsException ex) {
+            return new ResponseEntity<>(new ServerError(ex.getMessage(), HttpStatus.UNAUTHORIZED), apiUtil.getHeader(""),HttpStatus.UNAUTHORIZED);
         } catch (Exception ex) {
             return new ResponseEntity<>( new ServerError("An unexpected error occurred.", HttpStatus.INTERNAL_SERVER_ERROR), apiUtil.getHeader(""),HttpStatus.INTERNAL_SERVER_ERROR);
         }
@@ -48,6 +55,8 @@ public class UserController {
             return new ResponseEntity<>(responseBody, apiUtil.getHeader(""), HttpStatus.OK);
         } catch (EntityNotFoundException ex) {
             return new ResponseEntity<>( new ServerError("User not found by email : " + email), apiUtil.getHeader(""),HttpStatus.NOT_FOUND);
+        } catch (BadCredentialsException ex) {
+            return new ResponseEntity<>(new ServerError(ex.getMessage(), HttpStatus.UNAUTHORIZED), apiUtil.getHeader(""),HttpStatus.UNAUTHORIZED);
         } catch (Exception ex) {
             return new ResponseEntity<>( new ServerError("An unexpected error occurred."), apiUtil.getHeader(""),HttpStatus.INTERNAL_SERVER_ERROR);
         }
@@ -56,14 +65,17 @@ public class UserController {
     @PutMapping("/update-password")
     public ResponseEntity<?> updatePassword(@RequestBody Map<String, Object> user) {
         try {
+            String encodedPassword = passwordEncoder.encode((String) user.get("password"));
             User updatedUser = new User((String) user.get("email"),
-                                        (String) user.get("password"));
+                                         encodedPassword);
             userService.updatePassword(updatedUser);
 
             Map<String, String> responseBody = new HashMap<>();
             responseBody.put("message", "Successfully updated password");
 
             return new ResponseEntity<>(responseBody, apiUtil.getHeader(""), HttpStatus.OK);
+        } catch (BadCredentialsException ex) {
+            return new ResponseEntity<>(new ServerError(ex.getMessage(), HttpStatus.UNAUTHORIZED), apiUtil.getHeader(""),HttpStatus.UNAUTHORIZED);
         } catch (Exception ex) {
             System.out.println(ex.getMessage());
             return new ResponseEntity<>(new ServerError("An unexpected error occurred.", HttpStatus.INTERNAL_SERVER_ERROR), apiUtil.getHeader(""), HttpStatus.INTERNAL_SERVER_ERROR);
@@ -77,6 +89,8 @@ public class UserController {
             Map<String, String> responseBody = new HashMap<>();
             responseBody.put("message", "Successfully deleted user.");
             return new ResponseEntity<>(responseBody, apiUtil.getHeader("") , HttpStatus.OK);
+        } catch (BadCredentialsException ex) {
+            return new ResponseEntity<>(new ServerError(ex.getMessage(), HttpStatus.UNAUTHORIZED), apiUtil.getHeader(""),HttpStatus.UNAUTHORIZED);
         } catch (Exception ex) {
             return new ResponseEntity<>(new ServerError("An unexpected error occurred."), apiUtil.getHeader(""), HttpStatus.INTERNAL_SERVER_ERROR);
         }

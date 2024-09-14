@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
@@ -34,6 +35,8 @@ public class SkillController {
             responseBody.put("skills",skillService.getAllByUserId(userId));
 
             return new ResponseEntity<>(responseBody, apiUtil.getHeader(""), HttpStatus.OK);
+        } catch (BadCredentialsException ex) {
+            return new ResponseEntity<>(new ServerError(ex.getMessage(), HttpStatus.UNAUTHORIZED), apiUtil.getHeader(""),HttpStatus.UNAUTHORIZED);
         } catch (Exception ex) {
             return new ResponseEntity<>( new ServerError( "An unexpected error occurred."), apiUtil.getHeader(""),HttpStatus.INTERNAL_SERVER_ERROR);
         }
@@ -47,6 +50,8 @@ public class SkillController {
             responseBody.put("skills",skillService.findSkillsByUserId(userId));
 
             return new ResponseEntity<>(responseBody, apiUtil.getHeader(""), HttpStatus.OK);
+        } catch (BadCredentialsException ex) {
+            return new ResponseEntity<>(new ServerError(ex.getMessage(), HttpStatus.UNAUTHORIZED), apiUtil.getHeader(""),HttpStatus.UNAUTHORIZED);
         } catch (Exception ex) {
             return new ResponseEntity<>(new ServerError("An unexpected error occurred." + ex.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR), apiUtil.getHeader(""),HttpStatus.INTERNAL_SERVER_ERROR);
         }
@@ -64,6 +69,8 @@ public class SkillController {
             return new ResponseEntity<>( new ServerError("User or Language not found.", HttpStatus.NOT_FOUND), apiUtil.getHeader(""),HttpStatus.NOT_FOUND);
         } catch (DataIntegrityViolationException ex) {
             return new ResponseEntity<>( new ServerError("You already have this language skill.", HttpStatus.BAD_REQUEST), apiUtil.getHeader(""),HttpStatus.BAD_REQUEST);
+        } catch (BadCredentialsException ex) {
+            return new ResponseEntity<>(new ServerError(ex.getMessage(), HttpStatus.UNAUTHORIZED), apiUtil.getHeader(""),HttpStatus.UNAUTHORIZED);
         } catch (Exception ex) {
             return new ResponseEntity<>( new ServerError("An unexpected error occurred.",HttpStatus.INTERNAL_SERVER_ERROR), apiUtil.getHeader(""),HttpStatus.INTERNAL_SERVER_ERROR);
         }
@@ -77,6 +84,8 @@ public class SkillController {
             skillService.deleteSkillById(ids.get("skillId"));
             responseBody.put("message", "Successfully remove skill");
             return new ResponseEntity<>(responseBody, apiUtil.getHeader(""), HttpStatus.OK);
+        } catch (BadCredentialsException ex) {
+            return new ResponseEntity<>(new ServerError(ex.getMessage(), HttpStatus.UNAUTHORIZED), apiUtil.getHeader(""),HttpStatus.UNAUTHORIZED);
         } catch (Exception ex) {
             return new ResponseEntity<>( new ServerError("An unexpected error occurred."), apiUtil.getHeader(""),HttpStatus.INTERNAL_SERVER_ERROR);
         }
@@ -90,6 +99,8 @@ public class SkillController {
             if(skill.isPresent()) throw new RuntimeException("Skill already exists.");
 
             return new ResponseEntity<>(new HashMap<>(), apiUtil.getHeader(""), HttpStatus.OK);
+        } catch (BadCredentialsException ex) {
+            return new ResponseEntity<>(new ServerError(ex.getMessage(), HttpStatus.UNAUTHORIZED), apiUtil.getHeader(""),HttpStatus.UNAUTHORIZED);
         } catch (Exception ex) {
             return new ResponseEntity<>( new ServerError(ex.getMessage()), apiUtil.getHeader(""),HttpStatus.BAD_REQUEST);
         }

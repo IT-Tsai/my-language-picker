@@ -4,6 +4,8 @@ package io.practice.programming_languages_picker.model;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -27,7 +29,8 @@ public class Language {
     @Column(name="image_url", nullable = false)
     private String imageUrl;
 
-    @OneToMany(mappedBy = "language", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    @OneToMany(mappedBy = "language", fetch = FetchType.LAZY, orphanRemoval = true)
     private Set<Skill> skills = new HashSet<>();
 
     public Language() {

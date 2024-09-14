@@ -96,7 +96,7 @@ public class AuthController {
 
             return new ResponseEntity<>( responseBody, apiUtil.getHeader(""), HttpStatus.OK);
         } catch (UsernameNotFoundException | BadCredentialsException ex) {
-            return new ResponseEntity<>(new ServerError(ex.getMessage(), HttpStatus.NOT_FOUND), apiUtil.getHeader(""), HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(new ServerError("Email not found or incorrect password", HttpStatus.NOT_FOUND), apiUtil.getHeader(""), HttpStatus.NOT_FOUND);
         } catch (Exception ex) {
             return new ResponseEntity<>(new ServerError("An unexpected error occurred.", HttpStatus.INTERNAL_SERVER_ERROR), apiUtil.getHeader(""), HttpStatus.INTERNAL_SERVER_ERROR);
         }
@@ -156,7 +156,9 @@ public class AuthController {
     public ResponseEntity<?> validateToken(@RequestParam("accessToken") String accessToken) {
         Map<String, Object> responseBody = new HashMap<>();
         try {
-            jwtUtil.parseToken(accessToken);
+            Claims claims = jwtUtil.parseToken(accessToken);
+            userService.findByEmail(claims.getSubject());
+
             responseBody.put("isValid", true);
 
             return new ResponseEntity<>(responseBody, apiUtil.getHeader(""), HttpStatus.OK);
