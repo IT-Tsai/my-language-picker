@@ -71,7 +71,7 @@ public class UserController {
             userService.updatePassword(updatedUser);
 
             Map<String, String> responseBody = new HashMap<>();
-            responseBody.put("message", "Successfully updated password");
+            responseBody.put("message", "Successfully updated password.");
 
             return new ResponseEntity<>(responseBody, apiUtil.getHeader(""), HttpStatus.OK);
         } catch (BadCredentialsException ex) {

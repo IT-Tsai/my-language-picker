@@ -4,7 +4,7 @@ import { DefaultHeader } from '@/_util/auth';
 
 const url = `${process.env.NEXT_PUBLIC_SERVER_HOST}/${process.env.NEXT_PUBLIC_API}/${process.env.NEXT_PUBLIC_MYSQL_USER_DB}`;;
 
-export const updateUser = async (id: number, password: string, email: string, accessToken: string): Promise<void> => {
+export const updateUser = async (id: number, password: string, email: string, accessToken: string): Promise<any> => {
   try {
     const response = await fetch(`${url}/update-password`, {
       method: "PUT",

@@ -73,8 +73,8 @@ const Profile = () => {
       const userId = user?.id;
       // Clear previous error messages
       setErrorMessage('');
-      await onUpdateUser(data.password);
-      successToast("Successfully update password");
+      const message = await onUpdateUser(data.password);
+      successToast(message);
       reset();
       setIsEdit(false);
     } catch (error: any) {
@@ -113,6 +113,7 @@ const Profile = () => {
                 </div>
               </div>
             })}
+            {userSkills.length == 0 && <p>You haven't added any skills yet!</p>}
           </div>
           <div className="btn">
             <button className={classes["btn-item"]} onClick={() => setIsEdit(true)} disabled={isEdit}><FaEdit /> Edit</button>
