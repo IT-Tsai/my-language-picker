@@ -6,7 +6,6 @@ import io.practice.programming_languages_picker.projection.UserProjection;
 import io.practice.programming_languages_picker.repository.LanguageRepo;
 import io.practice.programming_languages_picker.repository.UserRepo;
 import jakarta.persistence.EntityNotFoundException;
-import jakarta.persistence.OptimisticLockException;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
