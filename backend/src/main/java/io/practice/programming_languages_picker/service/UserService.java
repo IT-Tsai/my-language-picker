@@ -6,6 +6,7 @@ import io.practice.programming_languages_picker.projection.UserProjection;
 import io.practice.programming_languages_picker.repository.LanguageRepo;
 import io.practice.programming_languages_picker.repository.UserRepo;
 import jakarta.persistence.EntityNotFoundException;
+import jakarta.persistence.OptimisticLockException;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -59,6 +60,7 @@ public class UserService implements UserDetailsService {
     }
 
     public boolean existsByEmail(String email) {
+
         return userRepo.existsByEmail(email);
     }
 
@@ -76,6 +78,7 @@ public class UserService implements UserDetailsService {
 
     @Transactional
     public void deleteUser(int id) {
+        if (!userRepo.existsById(id)) throw new EntityNotFoundException("User does not exist.");
         userRepo.deleteById(id);
     }
 

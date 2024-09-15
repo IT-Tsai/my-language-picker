@@ -54,7 +54,7 @@ public class UserController {
 
             return new ResponseEntity<>(responseBody, apiUtil.getHeader(""), HttpStatus.OK);
         } catch (EntityNotFoundException ex) {
-            return new ResponseEntity<>( new ServerError("User not found by email : " + email), apiUtil.getHeader(""),HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>( new ServerError("User not found by email : " + email, HttpStatus.NOT_FOUND), apiUtil.getHeader(""),HttpStatus.NOT_FOUND);
         } catch (BadCredentialsException ex) {
             return new ResponseEntity<>(new ServerError(ex.getMessage(), HttpStatus.UNAUTHORIZED), apiUtil.getHeader(""),HttpStatus.UNAUTHORIZED);
         } catch (Exception ex) {
@@ -83,14 +83,15 @@ public class UserController {
     }
 
     @DeleteMapping("/delete")
-    public ResponseEntity<?> deleteUser(@RequestParam("userId") int userId) {
+    public ResponseEntity<?> deleteUser(@RequestParam("userId") Integer userId) {
         try {
             userService.deleteUser(userId);
             Map<String, String> responseBody = new HashMap<>();
             responseBody.put("message", "Successfully deleted user.");
             return new ResponseEntity<>(responseBody, apiUtil.getHeader("") , HttpStatus.OK);
-        } catch (BadCredentialsException ex) {
-            return new ResponseEntity<>(new ServerError(ex.getMessage(), HttpStatus.UNAUTHORIZED), apiUtil.getHeader(""),HttpStatus.UNAUTHORIZED);
+        } catch (EntityNotFoundException | BadCredentialsException ex) {
+            HttpStatus httpStatus = ex.getClass() == BadCredentialsException.class ? HttpStatus.UNAUTHORIZED : HttpStatus.NOT_FOUND;
+            return new ResponseEntity<>(new ServerError(ex.getMessage(), httpStatus), apiUtil.getHeader(""), httpStatus);
         } catch (Exception ex) {
             return new ResponseEntity<>(new ServerError("An unexpected error occurred."), apiUtil.getHeader(""), HttpStatus.INTERNAL_SERVER_ERROR);
         }
