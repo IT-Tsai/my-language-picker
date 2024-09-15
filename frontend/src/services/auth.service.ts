@@ -21,8 +21,6 @@ export const signIn = async (email: string, password: string): Promise<IAuthUser
       throw (data.message) || 'Unable to Login';
     }
 
-    console.log(data);
-
     return data;
 
   } catch (error: any) {
@@ -46,7 +44,6 @@ export const signUp = async (password: string, email: string, role: string): Pro
     const data = await response.json();
 
     if (!response.ok) {
-      console.log(data.message);
       throw (data.message) || 'Unable to register';
     }
     return data;

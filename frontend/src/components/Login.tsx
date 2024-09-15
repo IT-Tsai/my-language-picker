@@ -22,7 +22,6 @@ const Login = () => {
       setErrorMessage('');
       const user = await login(data.email, data.password);
       router.push("/languages");
-      console.log("login");
     } catch (error: any) {
       // If login failed, display error message
       setErrorMessage(error.message);
