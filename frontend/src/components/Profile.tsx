@@ -50,9 +50,9 @@ const Profile = () => {
 
   const onRemoveSkill = async (id: number) => {
     try {
-      await deleteSkillFromUser(id);
+      const message = await deleteSkillFromUser(id);
       setUserSkills((prevSkills) => prevSkills.filter((skill: Skill) => skill.skillId !== id));
-      successToast("Successfully remove skill");
+      successToast(message);
     } catch (error: any) {
       console.error('Failed to fetch user:', error);
       errorToast(error);

@@ -55,7 +55,7 @@ export const getSkillsByUserId = async (userId: number, accessToken: string): Pr
 
 }
 
-export const addNewSkillToUser = async (userId: number, languageId: number, accessToken: string): Promise<number> => {
+export const addNewSkillToUser = async (userId: number, languageId: number, accessToken: string): Promise<string> => {
   try {
     const response = await fetch(`${url}/user/add`,
       {
@@ -81,7 +81,7 @@ export const addNewSkillToUser = async (userId: number, languageId: number, acce
   }
 }
 
-export const removeSkill = async (skillId: number, accessToken: string): Promise<void> => {
+export const removeSkill = async (skillId: number, accessToken: string): Promise<any> => {
 
   try {
     const response = await fetch(`${url}/skill/delete`, {
@@ -98,6 +98,8 @@ export const removeSkill = async (skillId: number, accessToken: string): Promise
     if (!response.ok) {
       throw data.message;
     }
+
+    return data.message;
 
   } catch (error: any) {
     console.log(error, " error");

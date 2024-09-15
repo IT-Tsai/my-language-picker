@@ -17,7 +17,7 @@ const Languages = () => {
     try {
       await checkExistingSkill(userId, languageId);
       await addNewSkill(userId, languageId);
-      successToast("Successfully added");
+      successToast("Successfully added skill.");
     } catch (e: any) {
       errorToast(e.message);
     }

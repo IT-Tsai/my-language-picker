@@ -82,7 +82,7 @@ public class SkillController {
         try {
             Map<String, String> responseBody = new HashMap<>();
             skillService.deleteSkillById(ids.get("skillId"));
-            responseBody.put("message", "Successfully remove skill");
+            responseBody.put("message", "Successfully remove skill.");
             return new ResponseEntity<>(responseBody, apiUtil.getHeader(""), HttpStatus.OK);
         } catch (BadCredentialsException ex) {
             return new ResponseEntity<>(new ServerError(ex.getMessage(), HttpStatus.UNAUTHORIZED), apiUtil.getHeader(""),HttpStatus.UNAUTHORIZED);
